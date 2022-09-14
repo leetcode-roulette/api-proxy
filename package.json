@@ -1,0 +1,44 @@
+{
+  "name": "api-proxy",
+  "version": "1.0.0",
+  "description": "REST API for https://leetcoderoulette.com",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon ./src/app.ts",
+    "start": "node ./dist/app.js",
+    "test": "jest --passWithNoTests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leetcode-roulette/api-proxy.git"
+  },
+  "keywords": [
+    "API",
+    "Leetcode",
+    "REST",
+    "REST",
+    "API",
+    "API",
+    "proxy"
+  ],
+  "author": "Eric Hicks",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leetcode-roulette/api-proxy/issues"
+  },
+  "homepage": "https://github.com/leetcode-roulette/api-proxy#readme",
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/node": "^18.7.18",
+    "jest": "^29.0.3",
+    "jest-rest-preset": "^0.0.4",
+    "nodemon": "^2.0.19",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.3"
+  }
+}
