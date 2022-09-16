@@ -1,8 +1,10 @@
-import express, { Router, Request, Response } from "express";
-import healthcheck from "../controllers/healthcheck";
+import express, { Router } from "express";
+import healthcheckRouter from "./healthcheck";
+import problemsRouter from "./problems";
 
 const router : Router = express.Router();
 
-router.route("/healthcheck").get(healthcheck);
+router.use("/healthcheck", healthcheckRouter);
+router.use("/problems", problemsRouter);
 
 export default router;
