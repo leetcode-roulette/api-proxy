@@ -1,12 +1,3 @@
-export interface ProblemData {
-  question_id: number;
-  question__title_slug: string;
-  question__title: string;
-  total_acs: number;
-  total_submitted: number;
-  frontend_question_id: number;
-}
-
 export interface LeetcodeProblem {
   stat: Stat;
   status: string | null;
