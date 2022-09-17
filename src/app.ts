@@ -1,19 +1,29 @@
 import { config } from 'dotenv';
 import express, { Application, NextFunction, Request, Response } from 'express';
 import v1Router from './v1/routes';
+import { Database } from './v1/db/db.config';
+import { PopulateProblems } from './v1/db/problems';
 
 config();
 
-const app: Application = express();
+const serve = async () : Promise<void> => {
+    const app: Application = express();
 
-app.use("/v1", v1Router);
+    await Database.connect();
 
-app.get('/', (req: Request, res: Response, next: NextFunction) => {
-    res.send('Welcome to the Leetcode Roulette API');
-});
+    app.use("/v1", v1Router);
 
-const PORT = process.env.PORT || 3000;
+    app.get('/', (req: Request, res: Response, next: NextFunction) => {
+        res.send('Welcome to the Leetcode Roulette API');
+    });
 
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
-});
+    const PORT = process.env.PORT || 3000;
+
+    app.listen(PORT, () => {
+        console.log(`Server is listening on port ${PORT}`);
+    });
+
+    await PopulateProblems.populate();
+}
+
+serve();
