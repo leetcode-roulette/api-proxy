@@ -1,4 +1,4 @@
-import { Problems } from '../models/problems';
+import { Problems, IProblem } from '../models/problems';
 import { LeetcodeProblem } from '../../packages/problem-extractor/interfaces';
 import { ProblemExtractor } from '../../packages/problem-extractor';
 
@@ -26,7 +26,7 @@ export class PopulateProblems {
       return;
     }
 
-    await Problems.create({
+    const p : IProblem = await Problems.create({
       problemId: problem.stat.question_id,
       title: problem.stat.question__title,
       titleSlug: problem.stat.question__title_slug,
@@ -34,6 +34,8 @@ export class PopulateProblems {
       difficulty: problem.difficulty.level,
       frontEndId: problem.stat.frontend_question_id
     });
+
+    await p.save();
   }
 
   private static async rowAlreadyExists(problem : LeetcodeProblem) : Promise<boolean> {

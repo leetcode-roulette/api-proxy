@@ -1,6 +1,15 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Document, Model, Schema } from "mongoose";
 
-const problemsSchema : Schema = new mongoose.Schema({
+export interface IProblem extends Document {
+  problemId: Number,
+  title: string,
+  titleSlug: string,
+  isPremium: boolean,
+  difficulty: number,
+  frontEndId: number
+};
+
+const problemsSchema : Schema<IProblem> = new mongoose.Schema({
   problemId: 'number',
   title: 'string',
   titleSlug: 'string',
@@ -9,7 +18,7 @@ const problemsSchema : Schema = new mongoose.Schema({
   frontEndId: 'number'
 });
 
-const Problems = mongoose.model('problems', problemsSchema);
+const Problems : Model<IProblem> = mongoose.model('problems', problemsSchema);
 
 export {
   Problems
