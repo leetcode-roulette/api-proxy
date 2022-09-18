@@ -1,0 +1,63 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Leetcode Roulette API V1",
+    "description": "Official REST API for Leetcode Roulette",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Leetcode Roulette",
+      "email": "eric.hicks@leetcoderoulette.com",
+      "url": "leetcoderoulette.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "api.leetcoderoulette.com",
+  "basePath": "/",
+  "schemes": ["https"],
+  "produces": ["application/json"],
+  "paths": {
+    "/v1/problems": {
+      "get": {
+        "tags": ["Problems"],
+        "summary": "Get all problems in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Problem": {
+      "required": ["problemId", "title", "titleSlug", "isPremium", "difficulty", "frontEndId"],
+      "properties": {
+        "problemId": {
+          "type": "integer",
+          "uniqueItems": true
+        },
+        "isPremium": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string"
+        },
+        "titleSlug": {
+          "type": "string"
+        },
+        "difficulty": {
+          "type": "integer"
+        },
+        "frontEndId": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
