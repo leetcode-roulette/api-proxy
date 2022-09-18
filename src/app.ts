@@ -1,10 +1,9 @@
 import { config } from 'dotenv';
-import express, { Application, NextFunction, Request, Response } from 'express';
+import express, { Application } from 'express';
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./docs/swagger.json";
 import v1Router from './v1/routes';
 import { Database } from './v1/db/db.config';
-import { PopulateProblems } from './v1/db/problems';
 
 config();
 
@@ -21,8 +20,6 @@ const serve = async () : Promise<void> => {
     app.listen(PORT, () => {
         console.log(`Server is listening on port ${PORT}`);
     });
-
-    await PopulateProblems.populate();
 }
 
 serve();
