@@ -1,5 +1,4 @@
 import { IProblem, Problems } from '../models/problems';
-import { Model } from 'mongoose';
 
 export interface ProblemData {
   title: string;
