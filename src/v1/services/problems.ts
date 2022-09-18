@@ -1,4 +1,5 @@
 import { IProblem, Problems } from '../models/problems';
+import { logger } from '../../logger';
 
 export interface ProblemData {
   title: string;
@@ -15,6 +16,7 @@ export class ProblemService {
     try {
       data = await Problems.find({});
     } catch(e : any) {
+      logger.error("Exception caught retrieving leetcode problems from database: " + e);
       return new Error("Error retrieving problems " + e);
     }
 
