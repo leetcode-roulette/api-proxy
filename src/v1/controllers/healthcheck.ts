@@ -11,4 +11,4 @@ const healthcheck : Handler = (req: Request, res: Response) => {
   });
 };
 
-export default healthcheck;
+export {healthcheck};
