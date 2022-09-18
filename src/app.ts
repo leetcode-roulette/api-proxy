@@ -13,12 +13,8 @@ const serve = async () : Promise<void> => {
 
     await Database.connect();
 
-    app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     app.use("/v1", v1Router);
-
-    app.get('/', (req: Request, res: Response, next: NextFunction) => {
-        res.send('Welcome to the Leetcode Roulette API');
-    });
+    app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
     const PORT = process.env.PORT || 3000;
 
