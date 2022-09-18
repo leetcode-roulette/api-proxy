@@ -1,13 +1,12 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Leetcode Roulette API V1",
+    "title": "Leetcode Roulette API",
     "description": "Official REST API for Leetcode Roulette",
     "version": "1.0.0",
     "contact": {
       "name": "Leetcode Roulette",
-      "email": "eric.hicks@leetcoderoulette.com",
-      "url": "leetcoderoulette.com"
+      "email": "eric.hicks@leetcoderoulette.com"
     },
     "license": {
       "name": "MIT",
@@ -19,7 +18,7 @@
   "schemes": ["https"],
   "produces": ["application/json"],
   "paths": {
-    "/v1/problems": {
+    "v1/problems": {
       "get": {
         "tags": ["Problems"],
         "summary": "Get all problems in system",
