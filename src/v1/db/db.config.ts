@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { logger } from '../../logger';
 
 export class Database {
   private static url : string | undefined;
@@ -7,11 +8,11 @@ export class Database {
     mongoose.connect(this.connectionString);
 
     mongoose.connection.once("open", async () : Promise<void> => {
-      console.log("Connected to database");
+      logger.info("Connected to database");
     });
 
     mongoose.connection.on("error", async (e) : Promise<void> => {
-      console.log("Error connectiong to database", e);
+      logger.error("Error connectiong to database: ", e);
     });
   }
 
@@ -23,7 +24,7 @@ export class Database {
     mongoose.disconnect();
 
     mongoose.connection.close(async () : Promise<void> => {
-      console.log("Disconnected from database");
+      logger.info("Disconnected from database");
     })
   }
 
