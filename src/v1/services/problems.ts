@@ -45,7 +45,7 @@ export class ProblemService {
     }
 
     const totalPages = Math.ceil(total / limit) || 1;
-    const currentPage = Math.ceil(total % offset) || 0;
+    const currentPage = Math.ceil(total % offset) || 1;
 
     const parsedData : ProblemData[] = data.map(problem  => { 
       return {
