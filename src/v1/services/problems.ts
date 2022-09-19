@@ -64,7 +64,7 @@ export class ProblemService {
     };
 
     const responseJson : ResponseJson = {
-      message: "",
+      message: "Successfully retrieved all leetcode problems",
       questions: parsedData,
       paging
     }
