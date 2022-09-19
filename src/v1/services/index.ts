@@ -1,6 +1,7 @@
-import { ProblemService, ProblemData } from "./problems";
+import { ProblemService, ResponseJson, Query } from "./problems";
 
 export {
   ProblemService,
-  ProblemData
+  ResponseJson,
+  Query
 };

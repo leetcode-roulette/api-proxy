@@ -10,6 +10,7 @@ config();
 
 const serve = async () : Promise<void> => {
     const app: Application = express();
+    app.use(express.json());
 
     try {
         await Database.connect();

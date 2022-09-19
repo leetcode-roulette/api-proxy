@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { ProblemData, ProblemService } from "../services";
+import { ResponseJson, ProblemService, Query } from "../services";
 
 export class ProblemController {
-  public static async getAllProblems(req: Request, res: Response) {
-    let problems  : ProblemData[] | Error;
+  public static async getAllProblems(req: Request<{}, {}, {}, Query>, res: Response) {
+    let responseJson  : ResponseJson;
 
     try {
-      problems = await ProblemService.getAllProblems();
+      responseJson = await ProblemService.getAllProblems(req);
     } catch (e) {
       res.status(500).json({
         message: "Unexpected error getting problems",
@@ -15,9 +15,6 @@ export class ProblemController {
       return e;
     }
 
-    res.status(200).json({
-      message: "Successfully fetched problems",
-      questions: problems
-    });
+    res.status(200).json(responseJson);
   }
 }
