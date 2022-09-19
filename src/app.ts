@@ -11,6 +11,7 @@ config();
 const serve = async () : Promise<void> => {
     const app: Application = express();
     app.use(express.json());
+    app.set('json spaces', 2)
 
     try {
         await Database.connect();
