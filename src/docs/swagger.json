@@ -31,6 +31,34 @@
           }
         }
       }
+    },
+    "/v1/problems/{problemId}": {
+      "get": {
+        "tags": ["Problems"],
+        "summary": "Get problem by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "problemId",
+            "schema": {
+              "type": "integer"
+            },
+            "required": "true",
+            "description": "Numeric id of the problem to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
     }
   },
   "definitions": {
