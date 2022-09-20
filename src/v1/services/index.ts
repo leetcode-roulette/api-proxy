@@ -1,8 +1,9 @@
-import { ProblemService, ProblemData, ResponseJson, Query } from "./problems";
+import { ProblemService, ProblemData, ResponseJson, Params, Query } from "./problems";
 
 export {
   ProblemService,
   ProblemData,
   ResponseJson,
+  Params,
   Query
 };
