@@ -1,11 +1,11 @@
-import { app } from "../app";
+import { app } from "../../app";
 import supertest from "supertest";
 import mongoose from "mongoose";
-import { IProblem, Problems } from "../v1/models/problems";
-import { ProblemData } from "../v1/services";
+import { IProblem, Problems } from "../models/problems";
+import { ProblemData } from "../services";
 
 beforeEach((done) => {
-  mongoose.connect("mongodb://localhost:27017/JestDB", {}, () => done());
+  mongoose.connect("mongodb://localhost:27017/JestDBV1", {}, () => done());
 });
 
 afterEach((done) => {
