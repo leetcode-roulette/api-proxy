@@ -1,13 +1,5 @@
-import mongoose, { Document, Model, Schema } from "mongoose";
-
-export interface IProblem extends Document {
-  problemId: Number,
-  title: string,
-  titleSlug: string,
-  isPremium: boolean,
-  difficulty: number,
-  frontEndId: number
-};
+import mongoose, { Model, Schema } from "mongoose";
+import { IProblem } from "./";
 
 const problemsSchema : Schema<IProblem> = new mongoose.Schema({
   problemId: 'number',

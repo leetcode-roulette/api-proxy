@@ -1,7 +1,7 @@
 import { app } from "../../app";
 import supertest from "supertest";
 import mongoose from "mongoose";
-import { IProblem, Problems } from "../models/problems";
+import { IProblem, Problems } from "../models";
 import { ProblemData } from "../services";
 
 beforeEach((done) => {

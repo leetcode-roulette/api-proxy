@@ -8,7 +8,6 @@ config();
 
 export const app : Application = (() : Application => {
     const app: Application = express();
-
     app.use(express.json());
     app.set('json spaces', 2)
     app.use("/v1", v1Router);

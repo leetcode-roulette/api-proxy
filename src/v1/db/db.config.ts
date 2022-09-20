@@ -5,7 +5,6 @@ export class Database {
   private static url : string | undefined;
 
   public static async connect() : Promise<void> {
-
     try {
       await mongoose.connect(this.connectionString);
     } catch(e) {
@@ -34,7 +33,7 @@ export class Database {
 
     mongoose.connection.close(async () : Promise<void> => {
       logger.info("Disconnected from database");
-    })
+    });
   }
 
   private static get connectionString() : string {

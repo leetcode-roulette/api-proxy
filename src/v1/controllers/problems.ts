@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { ResponseJson, ProblemService, Query } from "../services";
-import { Params } from "../services";
+import { ResponseJson, ProblemService, Query, Params } from "../services";
 
 export class ProblemController {
   public static async getAllProblems(req: Request<{}, {}, {}, Query>, res: Response) : Promise<any> {

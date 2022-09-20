@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { ProblemController } from "../controllers/problems";
+import { ProblemController } from "../controllers";
 
 const problemsRouter : Router = express.Router();
 problemsRouter.route("/").get(ProblemController.getAllProblems);
