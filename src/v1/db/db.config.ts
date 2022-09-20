@@ -4,8 +4,13 @@ import { logger } from '../../logger';
 export class Database {
   private static url : string | undefined;
 
-  public static connect() : void {
-    mongoose.connect(this.connectionString);
+  public static async connect() : Promise<void> {
+
+    try {
+      await mongoose.connect(this.connectionString);
+    } catch(e) {
+      logger.error("Exception caught connecting to database:  " + e);
+    }
 
     mongoose.connection.once("open", async () : Promise<void> => {
       logger.info("Connected to database");
@@ -16,12 +21,16 @@ export class Database {
     });
   }
 
-  public static disconnect() : void {
+  public static async disconnect() : Promise<void> {
     if (!mongoose.connection) {
       return;
     }
 
-    mongoose.disconnect();
+    try {
+      mongoose.disconnect();
+    } catch(e) {
+      logger.error("Exception caught disconnecting from database:  " + e);
+    }
 
     mongoose.connection.close(async () : Promise<void> => {
       logger.info("Disconnected from database");

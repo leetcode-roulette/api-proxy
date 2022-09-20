@@ -8,7 +8,7 @@ export interface ResponseJson {
   paging: PagingData;
 }
 
-interface ProblemData {
+export interface ProblemData {
   title: string;
   title_slug: string;
   id: Number;

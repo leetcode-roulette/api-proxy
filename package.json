@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon ./src/app.ts",
-    "start": "node ./dist/app.js",
+    "dev": "nodemon ./src/index.ts",
+    "start": "node ./dist/index",
     "test": "jest --passWithNoTests"
   },
   "repository": {
@@ -29,11 +29,14 @@
   },
   "homepage": "https://github.com/leetcode-roulette/api-proxy#readme",
   "dependencies": {
+    "@types/supertest": "^2.0.12",
     "axios": "^0.27.2",
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
+    "mongodb": "^4.10.0",
     "mongoose": "^6.6.1",
     "querystring": "^0.2.1",
+    "supertest": "^6.2.4",
     "swagger-ui-express": "^4.5.0",
     "winston": "^3.8.2"
   },
