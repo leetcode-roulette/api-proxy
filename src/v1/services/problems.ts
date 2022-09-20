@@ -1,48 +1,8 @@
-import { IProblem, Problems } from '../models/problems';
+import { IProblem, Problems } from '../models';
 import { logger } from '../../logger';
 import { Request } from 'express';
 import { HTTPError } from '../../http-error';
-
-export interface ResponseJson {
-  message: string;
-  question?: ProblemData;
-  questions?: ProblemData[];
-  paging?: PagingData;
-}
-
-export interface ProblemData {
-  title: string;
-  title_slug: string;
-  id: Number;
-  difficulty: Number;
-  is_premium: boolean;
-};
-
-interface PagingData {
-  total: number;
-  page: number;
-  pages: number;
-};
-
-export interface Query {
-  limit: string;
-  offset: string;
-  difficulty: string;
-  premium: string;
-};
-
-export interface Params {
-  problemId: string
-};
-
-interface MongooseQuery {
-  difficulty?: Difficulty;
-  isPremium?: boolean;
-}
-
-interface Difficulty {
-  "$in": number[];
-}
+import { Query, Params, MongooseQuery, ResponseJson, ProblemData, PagingData } from './';
 
 export class ProblemService {
   public static async getAllProblems(req : Request<{}, {}, {}, Query>) : Promise<ResponseJson> {
