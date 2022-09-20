@@ -11,7 +11,7 @@ export class ProblemController {
     } catch (e : any) {
       res.status(e.statusCode || 500).json({
         message: "Unexpected error getting problems",
-        error: e
+        error: e.message
       });
       return e;
     }
