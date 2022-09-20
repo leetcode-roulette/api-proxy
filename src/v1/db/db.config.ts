@@ -44,6 +44,8 @@ export class Database {
       throw("MONGO_CONNECTION_STRING can not be found or is not defined");
     }
 
+    console.log(this.url);
+
     return this.url;
   }
 }
