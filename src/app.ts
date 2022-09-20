@@ -2,7 +2,7 @@ import { config } from 'dotenv';
 import express, { Application } from 'express';
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./docs/swagger.json";
-import v1Router from './v1/routes';
+import v1Router from "./v1/routes";
 
 config();
 
