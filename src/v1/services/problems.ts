@@ -27,11 +27,22 @@ interface PagingData {
 export interface Query {
   limit: string;
   offset: string;
+  difficulty: string;
+  premium: string;
 };
 
 export interface Params {
   problemId: string
 };
+
+interface MongooseQuery {
+  difficulty?: Difficulty;
+  isPremium?: boolean;
+}
+
+interface Difficulty {
+  "$in": number[];
+}
 
 export class ProblemService {
   public static async getAllProblems(req : Request<{}, {}, {}, Query>) : Promise<ResponseJson> {
@@ -41,10 +52,10 @@ export class ProblemService {
     const offset : number = parseInt(req.query.offset);
     
     try {
-      data = await Problems.find({})
+      data = await Problems.find(this.getMongooseQuery(req.query))
         .limit(limit)
         .skip(offset);
-      total = await Problems.count();
+      total = data.length;
     } catch(e : any) {
       logger.error("Exception caught retrieving leetcode problems from database: " + e);
       throw new HTTPError("Error retrieving problems " + e, 500);
@@ -106,5 +117,53 @@ export class ProblemService {
     };
 
     return responseJson;
+  }
+
+  private static getMongooseQuery(q : Query) : MongooseQuery {
+    const query : MongooseQuery = {};
+
+    if (q.difficulty) {
+      query.difficulty = {"$in": this.getDifficultyArray(q.difficulty.split(','))};
+    }
+
+    if (q.premium && q.premium.toLowerCase() === "false") {
+      query.isPremium = false;
+    }
+
+    return query;
+  }
+
+  private static getDifficultyArray(difficulties: string[]) : Array<number> {
+    const output : number[] = [];
+
+    for (let i = 0; i < difficulties.length; i++) {
+      if (this.isAValidDifficulty(difficulties[i])) output.push(this.getDifficulty(difficulties[i]));
+    }
+
+    return output;
+  }
+
+  private static isAValidDifficulty(difficulty: string) : boolean {
+    const d = difficulty.toLowerCase();
+    const valid = ["1", "2", "3", "easy", "medium", "hard"];
+
+    for (let i = 0; i < valid.length; i++) {
+      if (d === valid[i]) return true;
+    }
+
+    return false;
+  }
+
+  private static getDifficulty(difficulty: string) : number {
+    switch(difficulty.toLowerCase()) {
+      case("easy"):
+        return 1;
+      case("medium"):
+        return 2;
+      case("hard"):
+        return 3;
+    }
+
+    return parseInt(difficulty);
   }
 }
