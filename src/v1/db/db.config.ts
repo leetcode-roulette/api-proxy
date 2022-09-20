@@ -9,6 +9,7 @@ export class Database {
     try {
       await mongoose.connect(this.connectionString);
     } catch(e) {
+      logger.info(this.connectionString);
       logger.error("Exception caught connecting to database:  " + e);
     }
 
@@ -43,8 +44,6 @@ export class Database {
     if (this.url === undefined) {
       throw("MONGO_CONNECTION_STRING can not be found or is not defined");
     }
-
-    console.log(this.url);
 
     return this.url;
   }
