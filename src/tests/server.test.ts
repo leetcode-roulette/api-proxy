@@ -8,7 +8,7 @@ beforeEach((done) => {
 
 afterEach((done) => {
   Database.disconnect().then(() => done());
-})
+});
 
 test("GET /v1/problems", async () => {  
   await supertest(app).get("/v1/problems?limit=10")
@@ -18,3 +18,5 @@ test("GET /v1/problems", async () => {
       expect(response.body.questions.length).toEqual(10);
     });
 });
+
+afterAll(() => setTimeout(() => process.exit(), 1000));
