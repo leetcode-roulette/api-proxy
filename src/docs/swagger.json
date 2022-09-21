@@ -22,6 +22,48 @@
       "get": {
         "tags": ["Problems"],
         "summary": "Get all problems in system",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Regex of substring in title or title slug"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Numeric value specifying how many records to send back"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Numeric value specifying how many records to skip"
+          },
+          {
+            "in": "query",
+            "name": "premium",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Boolean value to fetch premium problems"
+          },
+          {
+            "in": "query",
+            "name": "difficulty",
+            "schema": {
+              "type": "string"
+            },
+            "description": "String specifying difficulties of problems to return"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
