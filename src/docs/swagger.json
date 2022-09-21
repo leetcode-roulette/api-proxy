@@ -1,0 +1,132 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Leetcode Roulette API",
+    "description": "Official REST API for Leetcode Roulette",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Leetcode Roulette",
+      "email": "eric.hicks@leetcoderoulette.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "api.leetcoderoulette.com",
+  "basePath": "/",
+  "schemes": ["https"],
+  "produces": ["application/json"],
+  "paths": {
+    "/v1/problems": {
+      "get": {
+        "tags": ["Problems"],
+        "summary": "Get all problems in system",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Regex of substring in title or title slug"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Numeric value specifying how many records to send back"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Numeric value specifying how many records to skip"
+          },
+          {
+            "in": "query",
+            "name": "premium",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Boolean value to fetch premium problems"
+          },
+          {
+            "in": "query",
+            "name": "difficulty",
+            "schema": {
+              "type": "string"
+            },
+            "description": "String specifying difficulties of problems to return"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          }
+        }
+      }
+    },
+    "/v1/problems/{problemId}": {
+      "get": {
+        "tags": ["Problems"],
+        "summary": "Get problem by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "problemId",
+            "schema": {
+              "type": "integer"
+            },
+            "required": "true",
+            "description": "Numeric id of the problem to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Problem"
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Problem": {
+      "required": ["problemId", "title", "titleSlug", "isPremium", "difficulty", "frontEndId"],
+      "properties": {
+        "problemId": {
+          "type": "integer",
+          "uniqueItems": true
+        },
+        "isPremium": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string"
+        },
+        "titleSlug": {
+          "type": "string"
+        },
+        "difficulty": {
+          "type": "integer"
+        },
+        "frontEndId": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
