@@ -24,6 +24,7 @@ export interface Query {
   offset: string;
   difficulty: string;
   premium: string;
+  q: string;
 };
 
 export interface Params {
@@ -33,8 +34,15 @@ export interface Params {
 export interface MongooseQuery {
   difficulty?: Difficulty;
   isPremium?: boolean;
+  title?: Search;
+  titleSlug?: Search;
 }
 
 interface Difficulty {
   "$in": number[];
+}
+
+interface Search {
+  "$regex": string;
+  "$options": string;
 }

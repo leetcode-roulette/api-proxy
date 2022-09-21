@@ -82,6 +82,10 @@ export class ProblemService {
   private static getMongooseQuery(q : Query) : MongooseQuery {
     const query : MongooseQuery = {};
 
+    if (q.q) {
+      query.title = query.titleSlug = {"$regex": q.q.split(',').join('|'), "$options": "i"};
+    }
+
     if (q.difficulty) {
       query.difficulty = {"$in": this.getDifficultyArray(q.difficulty.split(','))};
     }
