@@ -11,7 +11,7 @@ To get started running the Leetcode Roulette APIs locally, clone the repository 
 
 ```
 git clone https://github.com/leetcode-roulette/gateway-api.git
-cd api-proxy
+cd gateway-api
 npm install
 npm run build
 npm start
@@ -38,7 +38,7 @@ To begin development on this project, clone the repository to your local machine
 
 ```
 git clone https://github.com/leetcode-roulette/gateway-api.git
-cd api-proxy
+cd gateway-api
 npm install
 npm run dev
 ```
