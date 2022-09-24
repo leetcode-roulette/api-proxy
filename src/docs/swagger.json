@@ -125,6 +125,12 @@
         },
         "frontEndId": {
           "type": "integer"
+        },
+        "numSubmitted": {
+          "type": "integer"
+        },
+        "numAccepted": {
+          "type": "integer"
         }
       }
     }

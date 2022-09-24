@@ -30,7 +30,9 @@ export class ProblemService {
         title_slug: problem.titleSlug,
         id: problem.problemId,
         difficulty: problem.difficulty,
-        is_premium: problem.isPremium
+        is_premium: problem.isPremium,
+        num_submitted: problem.numSubmitted,
+        num_accepted: problem.numAccepted
       };
     });
 
@@ -69,6 +71,8 @@ export class ProblemService {
       id: data.problemId,
       difficulty: data.difficulty,
       is_premium: data.isPremium,
+      num_submitted: data.numSubmitted,
+      num_accepted: data.numAccepted
     };
 
     const responseJson : ResponseJson = {
