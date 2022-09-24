@@ -21,6 +21,8 @@ test("GET /v1/problems", async () => {
     title: "Test problem",
     titleSlug: "test_problem",
     difficulty: 1,
+    numAccepted: 1,
+    numSubmitted: 1,
   });
 
   await supertest(app).get("/v1/problems")
@@ -35,6 +37,8 @@ test("GET /v1/problems", async () => {
       expect(question.title).toBe(problem.title);
       expect(question.title_slug).toBe(problem.titleSlug);
       expect(question.is_premium).toBe(problem.isPremium);
+      expect(question.num_submitted).toBe(problem.numSubmitted);
+      expect(question.num_accepted).toBe(problem.numAccepted);
     });
 });
 
@@ -45,6 +49,8 @@ test("GET /v1/problems/:problemId", async () => {
     title: "Test problem",
     titleSlug: "test_problem",
     difficulty: 1,
+    numAccepted: 1,
+    numSubmitted: 1,
   });
 
   await supertest(app).get("/v1/problems/1")
@@ -58,6 +64,8 @@ test("GET /v1/problems/:problemId", async () => {
       expect(question.title).toBe(problem.title);
       expect(question.title_slug).toBe(problem.titleSlug);
       expect(question.is_premium).toBe(problem.isPremium);
+      expect(question.num_submitted).toBe(problem.numSubmitted);
+      expect(question.num_accepted).toBe(problem.numAccepted);
     });
 
     await supertest(app).get("/v1/problems/2")

@@ -8,9 +8,11 @@ export interface ResponseJson {
 export interface ProblemData {
   title: string;
   title_slug: string;
-  id: Number;
-  difficulty: Number;
+  id: number;
+  difficulty: number;
   is_premium: boolean;
+  num_submitted: number;
+  num_accepted: number;
 };
 
 export interface PagingData {
