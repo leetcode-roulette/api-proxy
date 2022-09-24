@@ -10,7 +10,7 @@ The main API used for [Leetcode Roulette](https://leetcoderoulette.com).
 To get started running the Leetcode Roulette APIs locally, clone the repository to your local machine and change to the project root directory. Next, make sure to make the needed configurations and run `npm install` to get the needed packages for the project. Next, build and run the project with `npm run build` followed by `npm start` respectively.
 
 ```
-git clone https://github.com/leetcode-roulette/api-proxy.git
+git clone https://github.com/leetcode-roulette/gateway-api.git
 cd api-proxy
 npm install
 npm run build
@@ -37,7 +37,7 @@ Before starting, you'll need to configure the mongoose database connection strin
 To begin development on this project, clone the repository to your local machine and change to the project root directory. Next, make sure to make the needed configurations and run `npm install` to get the needed packages for the project. Finally, run the `npm run dev` command to deploy a local development environment on your local machine.
 
 ```
-git clone https://github.com/leetcode-roulette/api-proxy.git
+git clone https://github.com/leetcode-roulette/gateway-api.git
 cd api-proxy
 npm install
 npm run dev
