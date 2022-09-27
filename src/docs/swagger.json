@@ -62,6 +62,14 @@
               "type": "string"
             },
             "description": "String specifying difficulties of problems to return"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string"
+            },
+            "description": "String specifying the order problems will be returned"
           }
         ],
         "responses": {
@@ -105,7 +113,7 @@
   },
   "definitions": {
     "Problem": {
-      "required": ["problemId", "title", "titleSlug", "isPremium", "difficulty", "frontEndId"],
+      "required": ["problemId", "title", "titleSlug", "isPremium", "difficulty", "frontEndId", "numSubmitted", "numAccepted"],
       "properties": {
         "problemId": {
           "type": "integer",

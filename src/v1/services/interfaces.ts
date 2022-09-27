@@ -27,6 +27,7 @@ export interface Query {
   difficulty: string;
   premium: string;
   q: string;
+  sort: string;
 };
 
 export interface Params {
@@ -37,7 +38,6 @@ export interface MongooseQuery {
   difficulty?: Difficulty;
   isPremium?: boolean;
   title?: Search;
-  titleSlug?: Search;
 }
 
 interface Difficulty {
