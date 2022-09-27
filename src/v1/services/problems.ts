@@ -13,6 +13,7 @@ export class ProblemService {
     
     try {
       data = await Problems.find(this.getMongooseQuery(req.query))
+        .sort(this.getSortString(req.query))
         .limit(limit)
         .skip(offset);
       total = data.length;
@@ -87,7 +88,7 @@ export class ProblemService {
     const query : MongooseQuery = {};
 
     if (q.q) {
-      query.title = query.titleSlug = {"$regex": q.q.split(',').join('|'), "$options": "i"};
+      query.title = {"$regex": q.q.split(',').join('|'), "$options": "i"};
     }
 
     if (q.difficulty) {
@@ -133,5 +134,20 @@ export class ProblemService {
     }
 
     return parseInt(difficulty);
+  }
+
+  private static getSortString(query : Query) : string {
+    let sortString : string | null = query.sort;
+    const sortStrings : Set<string> = new Set([
+      "difficulty",
+      "title",
+      "problemId"
+    ]);
+
+    if (!sortString || !sortStrings.has(sortString)) {
+      sortString = "problemId";
+    }
+
+    return sortString;
   }
 }
