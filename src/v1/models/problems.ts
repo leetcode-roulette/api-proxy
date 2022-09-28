@@ -12,8 +12,4 @@ const problemsSchema : Schema<IProblem> = new mongoose.Schema({
   numAccepted: 'number'
 });
 
-const Problems : Model<IProblem> = mongoose.model('problems', problemsSchema);
-
-export {
-  Problems
-};
+export const Problems : Model<IProblem> = mongoose.model('problems', problemsSchema);
