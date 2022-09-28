@@ -9,6 +9,7 @@ export interface ResponseJson {
 export interface TagData {
   id: number;
   name: string;
+  number_of_problems: number;
 }
 
 export interface ProblemData {

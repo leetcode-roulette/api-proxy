@@ -175,7 +175,7 @@
       }
     },
     "Tag": {
-      "required": ["tagId", "name"],
+      "required": ["tagId", "name", "integer"],
       "properties": {
         "tagId": {
           "type": "integer",
@@ -183,6 +183,9 @@
         },
         "name": {
           "type": "string"
+        },
+        "number_of_problems": {
+          "type": "integer"
         }
       }
     }

@@ -1,9 +1,8 @@
-import { IProblem, ITag, Problems } from '../models';
+import { ITag, Tags } from '../models';
 import { logger } from '../../logger';
 import { Request } from 'express';
 import { HTTPError } from '../../http-error';
 import { Query, ResponseJson, TagData, PagingData } from './interfaces';
-import { Tags } from '../models/tags';
 
 export class TagsService {
   public static async getAllTags(req: Request<{}, {}, {}, Query>) : Promise<ResponseJson> {
@@ -28,7 +27,8 @@ export class TagsService {
     const parsedData : TagData[] = data.map(tag  => { 
       return {
         id: tag.tagId,
-        name: tag.name
+        name: tag.name,
+        number_of_problems: tag.numberOfProblems
       };
     });
 
