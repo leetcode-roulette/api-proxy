@@ -109,6 +109,38 @@
           }
         }
       }
+    },
+    "/v1/tags": {
+      "get": {
+        "tags": ["Tags"],
+        "summary": "Get all tags in system",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "schena": {
+              "type": "integer"
+            },
+            "description": "Numeric value specifying how many records to send back"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schena": {
+              "type": "integer"
+            },
+            "description": "Numeric value specifying how many records to skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Tag"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -139,6 +171,18 @@
         },
         "numAccepted": {
           "type": "integer"
+        }
+      }
+    },
+    "Tag": {
+      "required": ["tagId", "name"],
+      "properties": {
+        "tagId": {
+          "type": "integer",
+          "uniqueItems": true
+        },
+        "name": {
+          "type": "string"
         }
       }
     }
