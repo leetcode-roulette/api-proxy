@@ -1,8 +1,15 @@
 export interface ResponseJson {
   message: string;
+  tags?: TagData[];
   question?: ProblemData;
   questions?: ProblemData[];
   paging?: PagingData;
+}
+
+export interface TagData {
+  id: number;
+  name: string;
+  number_of_problems: number;
 }
 
 export interface ProblemData {

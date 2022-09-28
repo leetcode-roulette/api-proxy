@@ -10,3 +10,9 @@ export interface IProblem extends Document {
   numSubmitted: number,
   numAccepted: number
 };
+
+export interface ITag extends Document {
+  tagId: number,
+  name: string,
+  numberOfProblems: number
+}

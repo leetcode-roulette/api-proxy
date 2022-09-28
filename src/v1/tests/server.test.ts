@@ -1,8 +1,9 @@
 import { app } from "../../app";
 import supertest from "supertest";
 import mongoose from "mongoose";
-import { IProblem, Problems } from "../models";
+import { IProblem, ITag, Problems, Tags } from "../models";
 import { ProblemData } from "../services";
+import { TagData } from "../services/interfaces";
 
 beforeEach((done) => {
   mongoose.connect("mongodb://localhost:27017/JestDBV1", {}, () => done());
@@ -70,4 +71,24 @@ test("GET /v1/problems/:problemId", async () => {
 
     await supertest(app).get("/v1/problems/2")
       .expect(404)
-})
+});
+
+test("GET /v1/tags", async () => {
+  const tag : ITag = await Tags.create({
+    tagId: 1,
+    name: "Heap",
+    numberOfProblems: 1
+  });
+
+  await supertest(app).get("/v1/tags")
+    .expect(200)
+    .then((response) => {
+      expect(Array.isArray(response.body.tags)).toBeTruthy();
+      expect(response.body.tags.length).toEqual(1);
+
+      const t : TagData = response.body.tags[0];
+      expect(t.id).toBe(tag.tagId);
+      expect(t.name).toBe(tag.name);
+      expect(t.number_of_problems).toBe(tag.numberOfProblems);
+    });
+});
