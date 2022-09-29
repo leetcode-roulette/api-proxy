@@ -43,7 +43,7 @@ test("GET /v1/problems", async () => {
     });
 });
 
-test("Get /v1/problems tags query string", async () => {
+test("GET /v1/problems tags query string", async () => {
   const problem : IProblem = await Problems.create({
     problemId: 1,
     frontEndId: 1,
