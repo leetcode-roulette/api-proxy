@@ -1,4 +1,4 @@
-import { IProblem, Problems } from '../models';
+import { IProblem, Problems, ProblemTags, Tags } from '../models';
 import { logger } from '../../logger';
 import { Request } from 'express';
 import { HTTPError } from '../../http-error';
@@ -12,8 +12,9 @@ export class ProblemService {
     const offset : number = parseInt(req.query.offset);
     
     try {
-      data = await Problems.find(this.getMongooseQuery(req.query))
-        .sort(this.getSortString(req.query))
+      const query = await this.getMongooseQuery(req.query);
+      data = await Problems.find(query)
+        .sort(this.getSortString(req.query.sort))
         .limit(limit)
         .skip(offset);
       total = data.length;
@@ -84,7 +85,7 @@ export class ProblemService {
     return responseJson;
   }
 
-  private static getMongooseQuery(q : Query) : MongooseQuery {
+  private static async getMongooseQuery(q : Query) : Promise<MongooseQuery> {
     const query : MongooseQuery = {};
 
     if (q.q) {
@@ -97,6 +98,11 @@ export class ProblemService {
 
     if (q.premium && q.premium.toLowerCase() === "false") {
       query.isPremium = false;
+    }
+
+    if (q.tags) {
+      const problemIds = await this.getProblemIds(q.tags.split(","));
+      query.problemId = {"$in": problemIds};
     }
 
     return query;
@@ -136,8 +142,7 @@ export class ProblemService {
     return parseInt(difficulty);
   }
 
-  private static getSortString(query : Query) : string {
-    let sortString : string | null = query.sort;
+  private static getSortString(sortString : string | null) : string {
     const sortStrings : Set<string> = new Set([
       "difficulty",
       "title",
@@ -149,5 +154,55 @@ export class ProblemService {
     }
 
     return sortString;
+  }
+
+  private static async getProblemIds(tags : string[]) : Promise<number[]> {
+    const processes : Promise<void>[] = [];
+    const problemIds : number[] = [];
+
+    tags.forEach(tag => {
+      processes.push(this.appendProblemIdsByTagSlug(tag, problemIds));
+    });
+
+    await Promise.all(processes);
+    return problemIds;
+  }
+
+  private static async appendProblemIdsByTagSlug(nameSlug: string, problemIds: number[]) : Promise<void> {
+    try {
+      const tagId = await this.getTagIdBySlug(nameSlug);
+      const ids = await this.getProblemIdsByTagId(tagId);
+      problemIds.push(...ids);
+    } catch(e) {
+      throw new Error("Exception caught getting problem Ids: " + e);
+    }
+  }
+
+  private static async getTagIdBySlug(nameSlug : string) : Promise<number> {
+    let tagId;
+
+    try {
+      const tag = await Tags.findOne({ nameSlug });
+      tagId = tag?.tagId;
+    } catch(e) {
+      throw new Error("Exception caught getting tag by slug: " + e);
+    }
+
+    return tagId;
+  }
+
+  private static async getProblemIdsByTagId(tagId : number) : Promise<number[]> {
+    const problemIds : number[] = [];
+
+    try {
+      const problemTags = await ProblemTags.find({ tagId });
+      problemTags.forEach( problemTag => {
+        problemIds.push(problemTag.problemId);
+      });
+    } catch(e) {
+      throw new Error("Exception caught getting problem tag by id");
+    }
+
+    return problemIds;
   }
 }
