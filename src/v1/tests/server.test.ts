@@ -1,7 +1,7 @@
 import { app } from "../../app";
 import supertest from "supertest";
 import mongoose from "mongoose";
-import { IProblem, ITag, Problems, Tags } from "../models";
+import { IProblem, ITag, IProblemTag, Problems, ProblemTags, Tags } from "../models";
 import { ProblemData } from "../services";
 import { TagData } from "../services/interfaces";
 
@@ -31,6 +31,56 @@ test("GET /v1/problems", async () => {
     .then((response) => {
       expect(Array.isArray(response.body.questions)).toBeTruthy();
       expect(response.body.questions.length).toEqual(1);
+
+      const question : ProblemData = response.body.questions[0];
+      expect(question.difficulty).toBe(problem.difficulty);
+      expect(question.id).toBe(problem.problemId);
+      expect(question.title).toBe(problem.title);
+      expect(question.title_slug).toBe(problem.titleSlug);
+      expect(question.is_premium).toBe(problem.isPremium);
+      expect(question.num_submitted).toBe(problem.numSubmitted);
+      expect(question.num_accepted).toBe(problem.numAccepted);
+    });
+});
+
+test("Get /v1/problems tags query string", async () => {
+  const problem : IProblem = await Problems.create({
+    problemId: 1,
+    frontEndId: 1,
+    title: "Test problem",
+    titleSlug: "test_problem",
+    difficulty: 1,
+    numAccepted: 1,
+    numSubmitted: 1,
+  });
+
+  await Problems.create({
+    problemId: 2,
+    frontEndId: 2,
+    title: "Test problem 2",
+    titleSlug: "test_problem_2",
+    difficulty: 3,
+    numAccepted: 0,
+    numSubmitted: 0,
+  });
+
+  const tag : ITag = await Tags.create({
+    tagId: 1,
+    name: "Heap",
+    nameSlug: "heap",
+    numberOfProblems: 1
+  });
+
+  await ProblemTags.create({
+    tagId: 1,
+    problemId: 1
+  });
+
+  await supertest(app).get("/v1/problems?tags=heap")
+    .expect(200)
+    .then((response) => {
+      expect(Array.isArray(response.body.questions)).toBeTruthy();
+      expect(response.body.questions.length).toBe(1);
 
       const question : ProblemData = response.body.questions[0];
       expect(question.difficulty).toBe(problem.difficulty);
@@ -77,6 +127,7 @@ test("GET /v1/tags", async () => {
   const tag : ITag = await Tags.create({
     tagId: 1,
     name: "Heap",
+    nameSlug: "heap",
     numberOfProblems: 1
   });
 
@@ -89,6 +140,7 @@ test("GET /v1/tags", async () => {
       const t : TagData = response.body.tags[0];
       expect(t.id).toBe(tag.tagId);
       expect(t.name).toBe(tag.name);
+      expect(t.name_slug).toBe(tag.nameSlug);
       expect(t.number_of_problems).toBe(tag.numberOfProblems);
     });
 });

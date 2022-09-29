@@ -4,13 +4,14 @@ export interface ResponseJson {
   question?: ProblemData;
   questions?: ProblemData[];
   paging?: PagingData;
-}
+};
 
 export interface TagData {
   id: number;
   name: string;
+  name_slug: string;
   number_of_problems: number;
-}
+};
 
 export interface ProblemData {
   title: string;
@@ -35,6 +36,7 @@ export interface Query {
   premium: string;
   q: string;
   sort: string;
+  tags: string;
 };
 
 export interface Params {
@@ -45,13 +47,18 @@ export interface MongooseQuery {
   difficulty?: Difficulty;
   isPremium?: boolean;
   title?: Search;
-}
+  problemId?: ProblemId;
+};
 
 interface Difficulty {
   "$in": number[];
-}
+};
 
 interface Search {
   "$regex": string;
   "$options": string;
-}
+};
+
+interface ProblemId {
+  "$in": number[];
+};

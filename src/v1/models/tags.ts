@@ -4,6 +4,7 @@ import { ITag } from "./interfaces";
 const tagsSchema : Schema<ITag> = new mongoose.Schema({
   tagId: "Number",
   name: "String",
+  nameSlug: "String",
   numberOfProblems: "Number"
 });
 

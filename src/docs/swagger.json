@@ -29,7 +29,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Regex of substring in title or title slug"
+            "description": "Regex of substring in title"
           },
           {
             "in": "query",
@@ -70,6 +70,14 @@
               "type": "string"
             },
             "description": "String specifying the order problems will be returned"
+          },
+          {
+            "in": "query",
+            "name": "tags",
+            "schema": {
+              "type": "string"
+            },
+            "description": "String specifying tags that associated returned problems should have"
           }
         ],
         "responses": {

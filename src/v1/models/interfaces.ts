@@ -14,6 +14,7 @@ export interface IProblem extends Document {
 export interface ITag extends Document {
   tagId: number;
   name: string;
+  nameSlug: string;
   numberOfProblems: number;
 }
 

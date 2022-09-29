@@ -28,6 +28,7 @@ export class TagsService {
       return {
         id: tag.tagId,
         name: tag.name,
+        name_slug: tag.nameSlug,
         number_of_problems: tag.numberOfProblems
       };
     });
