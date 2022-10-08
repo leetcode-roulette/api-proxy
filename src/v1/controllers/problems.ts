@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { ResponseJson, ProblemService, Query, Params } from "../services";
+import { ResponseJson, ProblemService, ExpressQuery, Params } from "../services";
 
 export class ProblemController {
-  public static async getAllProblems(req: Request<{}, {}, {}, Query>, res: Response) : Promise<any> {
+  public static async getAllProblems(req: Request<{}, {}, {}, ExpressQuery>, res: Response) : Promise<any> {
     let responseJson  : ResponseJson;
 
     try {
@@ -18,7 +18,7 @@ export class ProblemController {
     res.status(200).json(responseJson);
   }
 
-  public static async getProblemById(req: Request<Params, {}, {}, Query>, res: Response) : Promise<any> {
+  public static async getProblemById(req: Request<Params, {}, {}, ExpressQuery>, res: Response) : Promise<any> {
     let responseJson : ResponseJson;
 
     try {

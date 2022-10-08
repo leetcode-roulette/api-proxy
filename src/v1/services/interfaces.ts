@@ -29,7 +29,7 @@ export interface PagingData {
   pages: number;
 };
 
-export interface Query {
+export interface ExpressQuery {
   limit: string;
   offset: string;
   difficulty: string;
@@ -37,7 +37,7 @@ export interface Query {
   q: string;
   sort: string;
   tags: string;
-};
+}
 
 export interface Params {
   problemId: string
@@ -50,15 +50,15 @@ export interface MongooseQuery {
   problemId?: ProblemId;
 };
 
-interface Difficulty {
+export interface Difficulty {
   "$in": number[];
 };
 
-interface Search {
+export interface Search {
   "$regex": string;
   "$options": string;
 };
 
-interface ProblemId {
+export interface ProblemId {
   "$in": number[];
 };
