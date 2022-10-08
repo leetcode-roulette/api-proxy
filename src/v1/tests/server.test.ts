@@ -218,15 +218,9 @@ test("GET /v1/problems tags query string", async () => {
     numSubmitted: 0,
   });
 
-  const tag : ITag = await Tags.create({
-    tagId: 1,
-    name: "Heap",
-    nameSlug: "heap",
-    numberOfProblems: 1
-  });
-
   await ProblemTags.create({
     tagId: 1,
+    tagSlug: "heap",
     problemId: 1
   });
 

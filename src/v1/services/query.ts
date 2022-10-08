@@ -5,28 +5,37 @@ import { IProblemTag, ITag, ProblemTags, Tags } from "../models";
 export class Query {
   private mongooseQuery: MongooseQuery = {};
   private sortString: string = "";
+  private query: ExpressQuery;
   
   constructor(query: ExpressQuery) {
-    this.initializeMongooseQuery(query);
-    this.getSortString(query.sort);
+    this.query = query;
   }
 
-  public initializeMongooseQuery(query: ExpressQuery) {
-    this.getDifficulties(query.difficulty);
-    this.getPremiumStatus(query.premium);
-    this.getSearch(query.q);
-    this.getProblemsWithTags(query.tags).catch(e => logger.error(e));
+  public async initializeMongooseQuery(): Promise<void> {
+    this.getDifficulties(this.query.difficulty);
+    this.getPremiumStatus(this.query.premium);
+    this.getSearch(this.query.q);
+    await this.getProblemsWithTags(this.query.tags);
   }
 
-  public get query(): MongooseQuery {
+  public async getQuery(): Promise<MongooseQuery> {
+    if (Object.keys(this.mongooseQuery).length === 0) {
+      await this.initializeMongooseQuery();
+    }
+
     return this.mongooseQuery;
   }
 
-  public get sort(): string {
+  public getSort(): string {
+    if (this.sortString === "") {
+      this.getSortString();
+    }
+
     return this.sortString;
   }
 
-  private getSortString(sortString: string | null): void {
+  private getSortString(): void {
+    let sortString: string | null = this.query.sort;
     const sortStrings : Set<string> = new Set([
       "difficulty",
       "title",
@@ -83,7 +92,10 @@ export class Query {
   }
 
   private getPremiumStatus(premium: string | undefined): void {
-    this.mongooseQuery.isPremium = !(premium && premium.toLowerCase() === "false");
+
+    if (premium && premium.toLowerCase() === "false") {
+      this.mongooseQuery.isPremium = false;
+    }
   }
 
   private getSearch(search: string): void {
@@ -101,7 +113,7 @@ export class Query {
 
     try {
       let problemIds: number[] = await this.getProblemIds(tags.split(",")).then(data => data);
-      this.mongooseQuery.problemId = await { "$in": problemIds };
+      this.mongooseQuery.problemId = { "$in": problemIds };
     } catch(e) {
       throw new Error("Exception caught getting problemIds " + e);
     }
@@ -112,7 +124,7 @@ export class Query {
     const problemIds : number[] = [];
 
     tags.forEach(tag => {
-      processes.push(this.appendProblemIdsByTagSlug(tag, problemIds));
+      processes.push(this.getProblemIdsByTagSlug(tag, problemIds));
     });
 
     try {
@@ -124,40 +136,13 @@ export class Query {
     return problemIds;
   }
 
-  private async appendProblemIdsByTagSlug(nameSlug: string, problemIds: number[]): Promise<void> {
+  private async getProblemIdsByTagSlug(tagSlug: string, problemIds) : Promise<void> {
     try {
-      const tagId = await this.getTagIdBySlug(nameSlug);
-      const ids = await this.getProblemIdsByTagId(tagId);
-      problemIds.push(...ids);
-    } catch(e) {
-      throw new Error("Exception caught getting problem Ids: " + e);
-    }
-  }
-
-  private async getTagIdBySlug(nameSlug: string): Promise<number> {
-    try {
-      const tag : ITag | null = await Tags.findOne({ nameSlug });
-
-      if (tag === null) {
-        throw new Error("Error getting tag by name slug");
-      }
-
-      return tag.tagId;
-    } catch(e) {
-      throw new Error("Exception caught getting tag by slug: " + e);
-    }
-  }
-
-  private async getProblemIdsByTagId(tagId: number) {
-    try {
-      const problemIds: number[] = [];
-      const problemTags: IProblemTag[] = await ProblemTags.find({ tagId });
+      const problemTags: IProblemTag[] = await ProblemTags.find({ tagSlug });
 
       problemTags.forEach( problemTag => {
         problemIds.push(problemTag.problemId);
       });
-
-      return problemIds;
     } catch(e) {
       throw new Error("Exception caught getting problem tag by id");
     }

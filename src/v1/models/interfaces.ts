@@ -21,4 +21,5 @@ export interface ITag extends Document {
 export interface IProblemTag extends Document {
   tagId: number;
   problemId: number;
+  tagSlug: string;
 }

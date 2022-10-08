@@ -11,8 +11,8 @@ export class ProblemService {
       const limit : number = parseInt(req.query.limit);
       const offset : number = parseInt(req.query.offset);
 
-      const data : IProblem[] = await Problems.find(query.query)
-        .sort(query.sort)
+      const data : IProblem[] = await Problems.find(await query.getQuery())
+        .sort(query.getSort())
         .limit(limit)
         .skip(offset);
 
@@ -60,7 +60,7 @@ export class ProblemService {
       return responseJson;
     } catch(e : any) {
       logger.error("Exception caught retrieving leetcode problem from database by id: " + e)
-      throw new HTTPError("Error retrieving problem by id " + e, 500);
+      throw new HTTPError("Error retrieving problem by id " + e, e.statusCode || 500);
     }
   }
 
