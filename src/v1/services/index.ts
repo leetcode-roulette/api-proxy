@@ -1,14 +1,20 @@
 import { ProblemService } from "./problems";
 import { TagsService } from "./tags";
-import { ProblemData, ResponseJson, Params, Query, PagingData, MongooseQuery } from "./interfaces"
+import { ProblemData, ResponseJson, Params, ExpressQuery, TagData, PagingData, MongooseQuery, Difficulty, Search, ProblemId } from "./interfaces"
+import { Query } from "./query";
 
 export {
   ProblemService,
   TagsService,
   ProblemData,
+  TagData,
   ResponseJson,
   Params,
-  Query,
+  ExpressQuery,
   PagingData,
-  MongooseQuery
+  MongooseQuery,
+  Difficulty,
+  Search,
+  ProblemId,
+  Query
 };

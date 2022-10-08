@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { TagsService, Query, ResponseJson } from "../services";
+import { TagsService, ExpressQuery, ResponseJson } from "../services";
 
 export class TagsController {
-  public static async getAllTags(req: Request<{}, {}, {}, Query>, res: Response) : Promise<any> {
+  public static async getAllTags(req: Request<{}, {}, {}, ExpressQuery>, res: Response) : Promise<any> {
     let responseJson  : ResponseJson;
 
     try {
