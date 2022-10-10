@@ -41,7 +41,7 @@
           },
           {
             "in": "query",
-            "name": "offset",
+            "name": "page",
             "schema": {
               "type": "integer"
             },
@@ -133,7 +133,7 @@
           },
           {
             "in": "query",
-            "name": "offset",
+            "name": "page",
             "schena": {
               "type": "integer"
             },
