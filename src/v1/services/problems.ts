@@ -2,23 +2,23 @@ import { IProblem, Problems } from '../models';
 import { logger } from '../../logger';
 import { Request } from 'express';
 import { HTTPError } from '../../http-error';
-import { Params, ResponseJson, ProblemData, PagingData, Query, ExpressQuery } from './';
+import { Params, ResponseJson, ProblemData, PagingData, Query, ExpressQuery, MongooseQuery } from './';
 
 export class ProblemService {
   public static async getAllProblems(req : Request<{}, {}, {}, ExpressQuery>) : Promise<ResponseJson> {
     try {
-      const query = new Query(req.query);
+      const query: Query = new Query(req.query);
+      const mongooseQuery: MongooseQuery = await query.getQuery();
       const limit : number = parseInt(req.query.limit);
-      const offset : number = parseInt(req.query.offset);
+      const page : number = parseInt(req.query.page) || 1;
 
-      const data : IProblem[] = await Problems.find(await query.getQuery())
+      const data : IProblem[] = await Problems.find(mongooseQuery)
         .sort(query.getSort())
         .limit(limit)
-        .skip(offset);
+        .skip((page - 1) * limit);
 
-      const total : number = data.length;
+      const total : number = await Problems.countDocuments(mongooseQuery);
       const totalPages = Math.ceil(total / limit) || 1;
-      const currentPage = Math.ceil(total % offset) || 1;
 
       const parsedData : ProblemData[] = data.map(problem  => { 
         return this.getProblemData(problem);
@@ -26,7 +26,7 @@ export class ProblemService {
 
       const paging : PagingData = {
         total,
-        page: currentPage,
+        page: page,
         pages: totalPages
       };
 

@@ -31,7 +31,7 @@ export interface PagingData {
 
 export interface ExpressQuery {
   limit: string;
-  offset: string;
+  page: string;
   difficulty: string;
   premium: string;
   q: string;

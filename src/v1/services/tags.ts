@@ -8,15 +8,14 @@ export class TagsService {
   public static async getAllTags(req: Request<{}, {}, {}, ExpressQuery>) : Promise<ResponseJson> {
     try {
       const limit : number = parseInt(req.query.limit);
-      const offset : number = parseInt(req.query.offset);
+      const page : number = parseInt(req.query.page) || 1;
 
       const data : ITag[] = await Tags.find()
         .limit(limit)
-        .skip(offset);
+        .skip((page - 1) * limit);
 
       const total : number = data.length;
       const totalPages : number = Math.ceil(total / limit) || 1;
-      const currentPage : number = Math.ceil(total % offset) || 1;
 
       const parsedData : TagData[] = data.map(tag  => { 
         return this.getTagData(tag);
@@ -24,7 +23,7 @@ export class TagsService {
 
       const paging : PagingData = {
         total,
-        page: currentPage,
+        page: page,
         pages: totalPages
       };
   
