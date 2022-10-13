@@ -1,5 +1,4 @@
 import { MongooseQuery, Difficulty, Search, ProblemId, ExpressQuery } from ".";
-import { logger } from "../../logger";
 import { IProblemTag, ITag, ProblemTags, Tags } from "../models";
 
 export class Query {
@@ -112,7 +111,7 @@ export class Query {
     }
 
     try {
-      let problemIds: number[] = await this.getProblemIds(tags.split(",")).then(data => data);
+      let problemIds: number[] = await this.getProblemIds(tags.split(","));
       this.mongooseQuery.problemId = { "$in": problemIds };
     } catch(e) {
       throw new Error("Exception caught getting problemIds " + e);
@@ -120,31 +119,17 @@ export class Query {
   }
 
   private async getProblemIds(tags: string[]): Promise<number[]> {
-    const processes : Promise<void>[] = [];
     const problemIds : number[] = [];
 
-    tags.forEach(tag => {
-      processes.push(this.getProblemIdsByTagSlug(tag, problemIds));
-    });
-
     try {
-      await Promise.all(processes);
+      const problemTags: IProblemTag[] = await ProblemTags.find({ tagSlug: { "$in": tags }});
+      problemTags.forEach( problemTag => {
+        problemIds.push(problemTag.problemId);
+      });
     } catch(e) {
       throw new Error("Exception caught executing processes " + e);
     }
     
     return problemIds;
-  }
-
-  private async getProblemIdsByTagSlug(tagSlug: string, problemIds) : Promise<void> {
-    try {
-      const problemTags: IProblemTag[] = await ProblemTags.find({ tagSlug });
-
-      problemTags.forEach( problemTag => {
-        problemIds.push(problemTag.problemId);
-      });
-    } catch(e) {
-      throw new Error("Exception caught getting problem tag by id");
-    }
   }
 }
