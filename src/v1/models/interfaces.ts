@@ -1,9 +1,11 @@
 import { Document } from "mongoose";
 
 export interface IProblem extends Document {
-	problemId: number;
+	problemID: number;
+	problemFrontendID: number;
 	title: string;
 	titleSlug: string;
+	tags: Array<ITag>;
 	isPremium: boolean;
 	difficulty: number;
 	frontEndId: number;

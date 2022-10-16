@@ -17,8 +17,8 @@ afterEach((done) => {
 
 test("GET /v1/problems", async () => {
 	const problem: IProblem = await Problems.create({
-		problemId: 1,
-		frontEndId: 1,
+		problemID: 1,
+		problemFrontendID: 1,
 		title: "Test problem",
 		titleSlug: "test_problem",
 		difficulty: 1,
@@ -35,19 +35,17 @@ test("GET /v1/problems", async () => {
 
 			const question: ProblemData = response.body.questions[0];
 			expect(question.difficulty).toBe(problem.difficulty);
-			expect(question.id).toBe(problem.problemId);
+			expect(question.id).toBe(problem.problemID);
 			expect(question.title).toBe(problem.title);
 			expect(question.title_slug).toBe(problem.titleSlug);
 			expect(question.is_premium).toBe(problem.isPremium);
-			expect(question.num_submitted).toBe(problem.numSubmitted);
-			expect(question.num_accepted).toBe(problem.numAccepted);
 		});
 });
 
 test("GET /v1/problems sort query string", async () => {
 	await Problems.create({
-		problemId: 2,
-		frontEndId: 2,
+		problemID: 2,
+		problemFrontendID: 2,
 		title: "First problem created",
 		titleSlug: "first_problem_created",
 		difficulty: 1,
@@ -56,8 +54,8 @@ test("GET /v1/problems sort query string", async () => {
 	});
 
 	const problem: IProblem = await Problems.create({
-		problemId: 1,
-		frontEndId: 1,
+		problemID: 1,
+		problemFrontendID: 1,
 		title: "Second problem created",
 		titleSlug: "second_problem_created",
 		difficulty: 1,
@@ -74,19 +72,17 @@ test("GET /v1/problems sort query string", async () => {
 
 			const question: ProblemData = response.body.questions[0];
 			expect(question.difficulty).toBe(problem.difficulty);
-			expect(question.id).toBe(problem.problemId);
+			expect(question.id).toBe(problem.problemID);
 			expect(question.title).toBe(problem.title);
 			expect(question.title_slug).toBe(problem.titleSlug);
 			expect(question.is_premium).toBe(problem.isPremium);
-			expect(question.num_submitted).toBe(problem.numSubmitted);
-			expect(question.num_accepted).toBe(problem.numAccepted);
 		});
 });
 
 test("GET /v1/problems premium query string", async () => {
 	const problem: IProblem = await Problems.create({
-		problemId: 1,
-		frontEndId: 1,
+		problemID: 1,
+		problemFrontendID: 1,
 		title: "Test problem",
 		titleSlug: "test_problem",
 		difficulty: 1,
@@ -96,8 +92,8 @@ test("GET /v1/problems premium query string", async () => {
 	});
 
 	await Problems.create({
-		problemId: 2,
-		frontEndId: 2,
+		problemID: 2,
+		problemFrontendID: 2,
 		title: "Test problem",
 		titleSlug: "test_problem",
 		difficulty: 2,
@@ -115,19 +111,17 @@ test("GET /v1/problems premium query string", async () => {
 
 			const question: ProblemData = response.body.questions[0];
 			expect(question.difficulty).toBe(problem.difficulty);
-			expect(question.id).toBe(problem.problemId);
+			expect(question.id).toBe(problem.problemID);
 			expect(question.title).toBe(problem.title);
 			expect(question.title_slug).toBe(problem.titleSlug);
 			expect(question.is_premium).toBe(problem.isPremium);
-			expect(question.num_submitted).toBe(problem.numSubmitted);
-			expect(question.num_accepted).toBe(problem.numAccepted);
 		});
 });
 
 test("GET /v1/problems search query string", async () => {
 	const problem: IProblem = await Problems.create({
-		problemId: 1,
-		frontEndId: 1,
+		problemID: 1,
+		problemFrontendID: 1,
 		title: "First problem",
 		titleSlug: "first_problem",
 		difficulty: 1,
@@ -136,8 +130,8 @@ test("GET /v1/problems search query string", async () => {
 	});
 
 	await Problems.create({
-		problemId: 2,
-		frontEndId: 2,
+		problemID: 2,
+		problemFrontendID: 2,
 		title: "Second problem",
 		titleSlug: "second_problem",
 		difficulty: 1,
@@ -154,19 +148,17 @@ test("GET /v1/problems search query string", async () => {
 
 			const question: ProblemData = response.body.questions[0];
 			expect(question.difficulty).toBe(problem.difficulty);
-			expect(question.id).toBe(problem.problemId);
+			expect(question.id).toBe(problem.problemID);
 			expect(question.title).toBe(problem.title);
 			expect(question.title_slug).toBe(problem.titleSlug);
 			expect(question.is_premium).toBe(problem.isPremium);
-			expect(question.num_submitted).toBe(problem.numSubmitted);
-			expect(question.num_accepted).toBe(problem.numAccepted);
 		});
 });
 
 test("GET /v1/problems difficulty query string", async () => {
 	const problem: IProblem = await Problems.create({
-		problemId: 1,
-		frontEndId: 1,
+		problemID: 1,
+		problemFrontendID: 1,
 		title: "Test problem",
 		titleSlug: "test_problem",
 		difficulty: 1,
@@ -175,8 +167,8 @@ test("GET /v1/problems difficulty query string", async () => {
 	});
 
 	await Problems.create({
-		problemId: 2,
-		frontEndId: 2,
+		problemID: 2,
+		problemFrontendID: 2,
 		title: "Test problem",
 		titleSlug: "test_problem",
 		difficulty: 2,
@@ -193,19 +185,17 @@ test("GET /v1/problems difficulty query string", async () => {
 
 			const question: ProblemData = response.body.questions[0];
 			expect(question.difficulty).toBe(problem.difficulty);
-			expect(question.id).toBe(problem.problemId);
+			expect(question.id).toBe(problem.problemID);
 			expect(question.title).toBe(problem.title);
 			expect(question.title_slug).toBe(problem.titleSlug);
 			expect(question.is_premium).toBe(problem.isPremium);
-			expect(question.num_submitted).toBe(problem.numSubmitted);
-			expect(question.num_accepted).toBe(problem.numAccepted);
 		});
 });
 
 test("GET /v1/problems tags query string", async () => {
 	const problem: IProblem = await Problems.create({
-		problemId: 1,
-		frontEndId: 1,
+		problemID: 1,
+		problemFrontendID: 1,
 		title: "Test problem",
 		titleSlug: "test_problem",
 		difficulty: 1,
@@ -214,8 +204,8 @@ test("GET /v1/problems tags query string", async () => {
 	});
 
 	await Problems.create({
-		problemId: 2,
-		frontEndId: 2,
+		problemID: 2,
+		problemFrontendID: 2,
 		title: "Test problem 2",
 		titleSlug: "test_problem_2",
 		difficulty: 3,
@@ -237,19 +227,17 @@ test("GET /v1/problems tags query string", async () => {
 
 			const question: ProblemData = response.body.questions[0];
 			expect(question.difficulty).toBe(problem.difficulty);
-			expect(question.id).toBe(problem.problemId);
+			expect(question.id).toBe(problem.problemID);
 			expect(question.title).toBe(problem.title);
 			expect(question.title_slug).toBe(problem.titleSlug);
 			expect(question.is_premium).toBe(problem.isPremium);
-			expect(question.num_submitted).toBe(problem.numSubmitted);
-			expect(question.num_accepted).toBe(problem.numAccepted);
 		});
 });
 
 test("GET /v1/problems/:problemId", async () => {
 	const problem: IProblem = await Problems.create({
-		problemId: 1,
-		frontEndId: 1,
+		problemID: 1,
+		problemFrontendID: 1,
 		title: "Test problem",
 		titleSlug: "test_problem",
 		difficulty: 1,
@@ -265,12 +253,10 @@ test("GET /v1/problems/:problemId", async () => {
 
 			const question: ProblemData = response.body.question;
 			expect(question.difficulty).toBe(problem.difficulty);
-			expect(question.id).toBe(problem.problemId);
+			expect(question.id).toBe(problem.problemID);
 			expect(question.title).toBe(problem.title);
 			expect(question.title_slug).toBe(problem.titleSlug);
 			expect(question.is_premium).toBe(problem.isPremium);
-			expect(question.num_submitted).toBe(problem.numSubmitted);
-			expect(question.num_accepted).toBe(problem.numAccepted);
 		});
 
 	await supertest(app).get("/v1/problems/2").expect(404);

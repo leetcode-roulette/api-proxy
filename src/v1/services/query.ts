@@ -35,10 +35,10 @@ export class Query {
 
 	private getSortString(): void {
 		let sortString: string | null = this.query.sort;
-		const sortStrings: Set<string> = new Set(["difficulty", "title", "problemId"]);
+		const sortStrings: Set<string> = new Set(["difficulty", "title", "problemID"]);
 
 		if (sortString === null || !sortStrings.has(sortString)) {
-			sortString = "problemId";
+			sortString = "problemID";
 		}
 
 		this.sortString = sortString;
@@ -55,7 +55,7 @@ export class Query {
 
 		difficultiesQuery.split(",").forEach((difficultyQuery) => {
 			if (this.isValidDifficulty(difficultiesQuery)) {
-				difficulty.$in.push(this.getDifficulty(difficultiesQuery));
+				difficulty.$in.push(this.getDifficulty(difficultyQuery));
 			}
 		});
 
@@ -107,7 +107,7 @@ export class Query {
 
 		try {
 			let problemIds: number[] = await this.getProblemIds(tags.split(","));
-			this.mongooseQuery.problemId = { $in: problemIds };
+			this.mongooseQuery.problemID = { $in: problemIds };
 		} catch (e) {
 			throw new Error("Exception caught getting problemIds " + e);
 		}
