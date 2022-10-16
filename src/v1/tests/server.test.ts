@@ -278,10 +278,8 @@ test("GET /v1/problems/:problemId", async () => {
 
 test("GET /v1/tags", async () => {
 	const tag: ITag = await Tags.create({
-		tagId: 1,
 		name: "Heap",
-		nameSlug: "heap",
-		numberOfProblems: 1,
+		tagSlug: "heap",
 	});
 
 	await supertest(app)
@@ -292,9 +290,7 @@ test("GET /v1/tags", async () => {
 			expect(response.body.tags.length).toEqual(1);
 
 			const t: TagData = response.body.tags[0];
-			expect(t.id).toBe(tag.tagId);
 			expect(t.name).toBe(tag.name);
-			expect(t.name_slug).toBe(tag.nameSlug);
-			expect(t.number_of_problems).toBe(tag.numberOfProblems);
+			expect(t.tag_slug).toBe(tag.tagSlug);
 		});
 });
