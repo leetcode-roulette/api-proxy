@@ -2,134 +2,129 @@ import { MongooseQuery, Difficulty, Search, ProblemId, ExpressQuery } from ".";
 import { IProblemTag, ITag, ProblemTags, Tags } from "../models";
 
 export class Query {
-  private mongooseQuery: MongooseQuery = {};
-  private sortString: string = "";
-  private query: ExpressQuery;
-  
-  constructor(query: ExpressQuery) {
-    this.query = query;
-  }
+	private mongooseQuery: MongooseQuery = {};
+	private sortString: string = "";
+	private query: ExpressQuery;
 
-  public async initializeMongooseQuery(): Promise<void> {
-    this.getDifficulties(this.query.difficulty);
-    this.getPremiumStatus(this.query.premium);
-    this.getSearch(this.query.q);
-    await this.getProblemsWithTags(this.query.tags);
-  }
+	constructor(query: ExpressQuery) {
+		this.query = query;
+	}
 
-  public async getQuery(): Promise<MongooseQuery> {
-    if (Object.keys(this.mongooseQuery).length === 0) {
-      await this.initializeMongooseQuery();
-    }
+	public async initializeMongooseQuery(): Promise<void> {
+		this.getDifficulties(this.query.difficulty);
+		this.getPremiumStatus(this.query.premium);
+		this.getSearch(this.query.q);
+		await this.getProblemsWithTags(this.query.tags);
+	}
 
-    return this.mongooseQuery;
-  }
+	public async getQuery(): Promise<MongooseQuery> {
+		if (Object.keys(this.mongooseQuery).length === 0) {
+			await this.initializeMongooseQuery();
+		}
 
-  public getSort(): string {
-    if (this.sortString === "") {
-      this.getSortString();
-    }
+		return this.mongooseQuery;
+	}
 
-    return this.sortString;
-  }
+	public getSort(): string {
+		if (this.sortString === "") {
+			this.getSortString();
+		}
 
-  private getSortString(): void {
-    let sortString: string | null = this.query.sort;
-    const sortStrings : Set<string> = new Set([
-      "difficulty",
-      "title",
-      "problemId"
-    ]);
+		return this.sortString;
+	}
 
-    if (sortString === null || !sortStrings.has(sortString)) {
-      sortString = "problemId";
-    }
+	private getSortString(): void {
+		let sortString: string | null = this.query.sort;
+		const sortStrings: Set<string> = new Set(["difficulty", "title", "problemId"]);
 
-    this.sortString = sortString;
-  }
+		if (sortString === null || !sortStrings.has(sortString)) {
+			sortString = "problemId";
+		}
 
-  private getDifficulties(difficultiesQuery: string): void {
-    const difficulty: Difficulty = {
-      "$in": []
-    };
+		this.sortString = sortString;
+	}
 
-    if (!difficultiesQuery) {
-      return;
-    }
+	private getDifficulties(difficultiesQuery: string): void {
+		const difficulty: Difficulty = {
+			$in: [],
+		};
 
-    difficultiesQuery.split(",").forEach(difficultyQuery => {
-      if (this.isValidDifficulty(difficultiesQuery)) {
-        difficulty.$in.push(this.getDifficulty(difficultiesQuery));
-      }
-    });
+		if (!difficultiesQuery) {
+			return;
+		}
 
-    this.mongooseQuery.difficulty = difficulty;
-  }
+		difficultiesQuery.split(",").forEach((difficultyQuery) => {
+			if (this.isValidDifficulty(difficultiesQuery)) {
+				difficulty.$in.push(this.getDifficulty(difficultiesQuery));
+			}
+		});
 
-  private isValidDifficulty(difficulty): boolean {
-    const d = difficulty.toLowerCase();
-    const valid = ["1", "2", "3", "easy", "medium", "hard"];
+		this.mongooseQuery.difficulty = difficulty;
+	}
 
-    for (let i = 0; i < valid.length; i++) {
-      if (d === valid[i]) return true;
-    }
+	private isValidDifficulty(difficulty): boolean {
+		const d = difficulty.toLowerCase();
+		const valid = ["1", "2", "3", "easy", "medium", "hard"];
 
-    return false;
-  }
+		for (let i = 0; i < valid.length; i++) {
+			if (d === valid[i]) return true;
+		}
 
-  private getDifficulty(difficulty: string): number {
-    switch(difficulty.toLowerCase()) {
-      case("easy"):
-        return 1;
-      case("medium"):
-        return 2;
-      case("hard"):
-        return 3;
-    }
+		return false;
+	}
 
-    return parseInt(difficulty);
-  }
+	private getDifficulty(difficulty: string): number {
+		switch (difficulty.toLowerCase()) {
+			case "easy":
+				return 1;
+			case "medium":
+				return 2;
+			case "hard":
+				return 3;
+		}
 
-  private getPremiumStatus(premium: string | undefined): void {
+		return parseInt(difficulty);
+	}
 
-    if (premium && premium.toLowerCase() === "false") {
-      this.mongooseQuery.isPremium = false;
-    }
-  }
+	private getPremiumStatus(premium: string | undefined): void {
+		if (premium && premium.toLowerCase() === "false") {
+			this.mongooseQuery.isPremium = false;
+		}
+	}
 
-  private getSearch(search: string): void {
-    if (!search) {
-      return;
-    }
+	private getSearch(search: string): void {
+		if (!search) {
+			return;
+		}
 
-    this.mongooseQuery.title = {"$regex": search.split(',').join('|'), "$options": "i"}
-  }
+		this.mongooseQuery.title = { $regex: search.split(",").join("|"), $options: "i" };
+	}
 
-  private async getProblemsWithTags(tags: string | undefined): Promise<void> {
-    if (!tags) {
-      return;
-    }
+	private async getProblemsWithTags(tags: string | undefined): Promise<void> {
+		if (!tags) {
+			return;
+		}
 
-    try {
-      let problemIds: number[] = await this.getProblemIds(tags.split(","));
-      this.mongooseQuery.problemId = { "$in": problemIds };
-    } catch(e) {
-      throw new Error("Exception caught getting problemIds " + e);
-    }
-  }
+		try {
+			let problemIds: number[] = await this.getProblemIds(tags.split(","));
+			this.mongooseQuery.problemId = { $in: problemIds };
+		} catch (e) {
+			throw new Error("Exception caught getting problemIds " + e);
+		}
+	}
 
-  private async getProblemIds(tags: string[]): Promise<number[]> {
-    const problemIds : number[] = [];
+	private async getProblemIds(tags: string[]): Promise<number[]> {
+		const problemIds: number[] = [];
 
-    try {
-      const problemTags: IProblemTag[] = await ProblemTags.find({ tagSlug: { "$in": tags }});
-      problemTags.forEach( problemTag => {
-        problemIds.push(problemTag.problemId);
-      });
-    } catch(e) {
-      throw new Error("Exception caught executing processes " + e);
-    }
-    
-    return problemIds;
-  }
+		try {
+			const problemTags: IProblemTag[] = await ProblemTags.find({ tagSlug: { $in: tags } });
+			problemTags.forEach((problemTag) => {
+				problemIds.push(problemTag.problemID);
+			});
+		} catch (e) {
+			throw new Error("Exception caught executing processes " + e);
+		}
+
+		return problemIds;
+	}
 }

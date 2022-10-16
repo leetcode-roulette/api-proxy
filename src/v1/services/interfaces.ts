@@ -1,64 +1,62 @@
 export interface ResponseJson {
-  message: string;
-  tags?: TagData[];
-  question?: ProblemData;
-  questions?: ProblemData[];
-  paging?: PagingData;
-};
+	message: string;
+	tags?: TagData[];
+	question?: ProblemData;
+	questions?: ProblemData[];
+	paging?: PagingData;
+}
 
 export interface TagData {
-  id: number;
-  name: string;
-  name_slug: string;
-  number_of_problems: number;
-};
+	name: string;
+	tag_slug: string;
+}
 
 export interface ProblemData {
-  title: string;
-  title_slug: string;
-  id: number;
-  difficulty: number;
-  is_premium: boolean;
-  num_submitted: number;
-  num_accepted: number;
-};
+	title: string;
+	title_slug: string;
+	id: number;
+	difficulty: number;
+	is_premium: boolean;
+	num_submitted: number;
+	num_accepted: number;
+}
 
 export interface PagingData {
-  total: number;
-  page: number;
-  pages: number;
-};
+	total: number;
+	page: number;
+	pages: number;
+}
 
 export interface ExpressQuery {
-  limit: string;
-  page: string;
-  difficulty: string;
-  premium: string;
-  q: string;
-  sort: string;
-  tags: string;
+	limit: string;
+	page: string;
+	difficulty: string;
+	premium: string;
+	q: string;
+	sort: string;
+	tags: string;
 }
 
 export interface Params {
-  problemId: string
-};
+	problemId: string;
+}
 
 export interface MongooseQuery {
-  difficulty?: Difficulty;
-  isPremium?: boolean;
-  title?: Search;
-  problemId?: ProblemId;
-};
+	difficulty?: Difficulty;
+	isPremium?: boolean;
+	title?: Search;
+	problemId?: ProblemId;
+}
 
 export interface Difficulty {
-  "$in": number[];
-};
+	$in: number[];
+}
 
 export interface Search {
-  "$regex": string;
-  "$options": string;
-};
+	$regex: string;
+	$options: string;
+}
 
 export interface ProblemId {
-  "$in": number[];
-};
+	$in: number[];
+}

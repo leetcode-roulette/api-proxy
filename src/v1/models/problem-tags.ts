@@ -1,10 +1,9 @@
 import mongoose, { Model, Schema } from "mongoose";
 import { IProblemTag } from "./";
 
-const problemTagsSchema : Schema<IProblemTag> = new mongoose.Schema({
-  tagId: "number",
-  tagSlug: "string",
-  problemId: "number",
+const problemTagsSchema: Schema<IProblemTag> = new mongoose.Schema({
+	tagSlug: "string",
+	problemID: "number",
 });
 
-export const ProblemTags : Model<IProblemTag> = mongoose.model('problem-tags', problemTagsSchema);
+export const ProblemTags: Model<IProblemTag> = mongoose.model("problemtags", problemTagsSchema);
