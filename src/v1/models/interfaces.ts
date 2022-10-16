@@ -1,25 +1,22 @@
-import { Document } from "mongoose"
+import { Document } from "mongoose";
 
 export interface IProblem extends Document {
-  problemId: number;
-  title: string;
-  titleSlug: string;
-  isPremium: boolean;
-  difficulty: number;
-  frontEndId: number;
-  numSubmitted: number;
-  numAccepted: number;
-};
+	problemId: number;
+	title: string;
+	titleSlug: string;
+	isPremium: boolean;
+	difficulty: number;
+	frontEndId: number;
+	numSubmitted: number;
+	numAccepted: number;
+}
 
 export interface ITag extends Document {
-  tagId: number;
-  name: string;
-  nameSlug: string;
-  numberOfProblems: number;
+	name: string;
+	tagSlug: string;
 }
 
 export interface IProblemTag extends Document {
-  tagId: number;
-  problemId: number;
-  tagSlug: string;
+	problemID: number;
+	tagSlug: string;
 }
