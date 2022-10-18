@@ -45,7 +45,7 @@ export class ProblemService {
 
   public static async getProblemById(req : Request<Params, {}, {}, ExpressQuery>) : Promise<ResponseJson> {
     try {
-      const problem : IProblem | null = await Problems.findOne({ problemId: req.params.problemId});
+      const problem : IProblem | null = await Problems.findOne({ problemID: req.params.problemId});
 
       if (problem === null) {
         throw new HTTPError("No problem found with provided id", 404);
@@ -68,11 +68,11 @@ export class ProblemService {
     return {
       title: problem.title,
       title_slug: problem.titleSlug,
-      id: problem.problemId,
+      tags: problem.tags.map(tag => tag.name),
+      id: problem.problemID,
+      frontend_id: problem.problemFrontendID,
       difficulty: problem.difficulty,
       is_premium: problem.isPremium,
-      num_submitted: problem.numSubmitted,
-      num_accepted: problem.numAccepted
     };
   }
 }

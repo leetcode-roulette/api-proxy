@@ -1,15 +1,15 @@
 import mongoose, { Model, Schema } from "mongoose";
 import { IProblem } from "./";
+import { tagsSchema } from "./tags";
 
 const problemsSchema : Schema<IProblem> = new mongoose.Schema({
-  problemId: 'number',
+  problemID: 'number',
+  problemFrontendID: 'number',
   title: 'string',
   titleSlug: 'string',
+  tags: [tagsSchema],
   isPremium: 'boolean',
-  difficulty: 'number',
-  frontEndId: 'number',
-  numSubmitted: 'number',
-  numAccepted: 'number'
+  difficulty: 'number'
 });
 
-export const Problems : Model<IProblem> = mongoose.model('problems', problemsSchema);
+export const Problems : Model<IProblem> = mongoose.model('problemdatas', problemsSchema);

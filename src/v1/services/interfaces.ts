@@ -1,3 +1,5 @@
+import { ITag } from "../models";
+
 export interface ResponseJson {
 	message: string;
 	tags?: TagData[];
@@ -14,11 +16,11 @@ export interface TagData {
 export interface ProblemData {
 	title: string;
 	title_slug: string;
+	tags: Array<string>;
 	id: number;
+	frontend_id: number;
 	difficulty: number;
 	is_premium: boolean;
-	num_submitted: number;
-	num_accepted: number;
 }
 
 export interface PagingData {
@@ -45,7 +47,7 @@ export interface MongooseQuery {
 	difficulty?: Difficulty;
 	isPremium?: boolean;
 	title?: Search;
-	problemId?: ProblemId;
+	problemID?: ProblemId;
 }
 
 export interface Difficulty {
