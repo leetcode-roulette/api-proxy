@@ -1,5 +1,5 @@
-import { MongooseQuery, Difficulty, Search, ProblemId, ExpressQuery } from ".";
-import { IProblemTag, ITag, ProblemTags, Tags } from "../models";
+import { MongooseQuery, Difficulty, ExpressQuery } from ".";
+import { IProblemTag, ProblemTags } from "../models";
 
 export class Query {
 	private mongooseQuery: MongooseQuery = {};
@@ -54,7 +54,7 @@ export class Query {
 		}
 
 		difficultiesQuery.split(",").forEach((difficultyQuery) => {
-			if (this.isValidDifficulty(difficultiesQuery)) {
+			if (this.isValidDifficulty(difficultyQuery)) {
 				difficulty.$in.push(this.getDifficulty(difficultyQuery));
 			}
 		});

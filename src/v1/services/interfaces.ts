@@ -1,5 +1,3 @@
-import { ITag } from "../models";
-
 export interface ResponseJson {
 	message: string;
 	tags?: TagData[];
@@ -11,6 +9,7 @@ export interface ResponseJson {
 export interface TagData {
 	name: string;
 	tag_slug: string;
+	number_of_problems: number;
 }
 
 export interface ProblemData {

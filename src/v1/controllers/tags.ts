@@ -7,9 +7,9 @@ export class TagsController {
 
     try {
       responseJson = await TagsService.getAllTags(req);
-    } catch(e : any) {
+    } catch (e : any) {
       res.status(e.statusCode || 500).json({
-        message: "Unexpected error getting problems",
+        message: "Unexpected error getting tags",
         error: e.message
       });
       return e;
