@@ -9,7 +9,14 @@ const problemsSchema : Schema<IProblem> = new mongoose.Schema({
   titleSlug: 'string',
   tags: [tagsSchema],
   isPremium: 'boolean',
-  difficulty: 'number'
+  difficulty: 'number',
+  content: 'string',
+  stats: {
+    accepted: 'number',
+    submissions: 'number',
+    acRate: 'string'
+  },
+  hints: ['string']
 });
 
 export const Problems : Model<IProblem> = mongoose.model('problemdatas', problemsSchema);

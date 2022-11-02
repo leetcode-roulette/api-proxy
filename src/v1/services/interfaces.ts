@@ -20,6 +20,11 @@ export interface ProblemData {
 	frontend_id: number;
 	difficulty: number;
 	is_premium: boolean;
+	description: string;
+	hints: Array<string>;
+	accepted: number;
+	submitted: number;
+	acceptance_rate: string;
 }
 
 export interface PagingData {
