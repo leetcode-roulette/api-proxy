@@ -73,6 +73,11 @@ export class ProblemService {
       frontend_id: problem.problemFrontendID,
       difficulty: problem.difficulty,
       is_premium: problem.isPremium,
+      description: problem.content,
+      hints: problem.hints,
+      accepted: problem.stats.accepted,
+      submitted: problem.stats.submissions,
+      acceptance_rate: problem.stats.acRate
     };
   }
 }

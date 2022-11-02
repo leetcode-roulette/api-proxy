@@ -1,5 +1,11 @@
 import { Document } from "mongoose";
 
+interface Stats {
+	accepted: number;
+	submissions: number;
+	acRate: string;
+}
+
 export interface IProblem extends Document {
 	problemID: number;
 	problemFrontendID: number;
@@ -9,8 +15,9 @@ export interface IProblem extends Document {
 	isPremium: boolean;
 	difficulty: number;
 	frontEndId: number;
-	numSubmitted: number;
-	numAccepted: number;
+	stats: Stats;
+	hints: Array<string>;
+	content: string;
 }
 
 export interface ITag extends Document {
